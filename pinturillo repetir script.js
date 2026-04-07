@@ -2,40 +2,34 @@
 Repite todos los mensajes de los demás usuarios.
 */
 
-// Guardar historial global
-window.chatHistory = [];
+window.echoLock = false;
 
-// Guardamos la execCommand original
 if (!window._original_execCommand) {
   window._original_execCommand = execCommand;
 }
 
-execCommand = function(v) {
-  // Guardamos el comando crudo en historial
-  window.chatHistory.push(v);
+execCommand = function(v){
 
-  // Procesar solo si es mensaje de chat (empieza con "J;")
-  if (typeof v === "string" && v.startsWith("J;")) {
+  if(!window.echoLock && typeof v === "string" && v.startsWith("J;")){
+
     const parts = v.split(";");
-    const player = parts[1] || "???";
-    const message = parts[3] || "";
+    const player = parts[1];
+    const message = parts[3];
 
-    // Ignorar mis propios mensajes
-    if (player !== bD) {
-      // Mostrar en consola
-      console.log(`[CHAT] ${player}: ${message}`);
+    // ignorar mis propios mensajes
+    if(player !== ea){
 
-      // Repetir con cn()
-      if (typeof cn === "function") {
-        try {
-          cn(`${message}`);
-        } catch (e) {
-          console.warn("No se pudo ejecutar cn:", e);
-        }
-      }
+      console.log("[CHAT]",player,message);
+
+      window.echoLock = true;
+
+      cA(ax(72,message));
+
+      setTimeout(()=>{
+        window.echoLock = false;
+      },50);
     }
   }
 
-  // Llamar a la original
-  window._original_execCommand(v);
+  return window._original_execCommand(v);
 };
