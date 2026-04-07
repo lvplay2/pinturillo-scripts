@@ -19,7 +19,7 @@ function enviarMensaje() {
   if (count >= repeticiones) return;
 
   const codigo = generarCodigo();
-  cn(codigo + " (escribe el mensaje aquí)");
+  cA(ax(72, codigo + " (escribe el mensaje aquí)"));
   count++;
 
   // Genera un delay aleatorio entre 1000ms y 1500ms
